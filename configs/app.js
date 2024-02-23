@@ -7,6 +7,7 @@ import morgan from 'morgan'
 import { config } from 'dotenv'
 import userRoutes from '../src/user/user.routes.js'
 import categoryRoutes from '../src/category/category.routes.js'
+import productRoutes from '../src/product/product.routes.js'
 
 const app = express()
 config()
@@ -20,6 +21,7 @@ app.use(morgan('dev'))
 
 app.use(userRoutes)
 app.use(categoryRoutes)
+app.use(productRoutes)
 
 export const initServer = () => {
     app.listen(port)
