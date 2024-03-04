@@ -6,10 +6,13 @@ import { roleAdmin, validateJwt } from '../../middlewares/verifyRole.js'
 
 const api = Router()
 
+//*Admin routes
 api.post('/createCategory', [validateJwt, roleAdmin], createCategory)
-api.put('/updateCategory', [validateJwt, roleAdmin], updateCategory)
-api.delete('/deleteCategory', [validateJwt, roleAdmin], deleteCategory)
-api.get('/getCategories', [validateJwt, roleAdmin], getCategories)
-api.post('/searchCategory', [validateJwt, roleAdmin], searchCategory)
+api.put('/updateCategory/:id', [validateJwt, roleAdmin], updateCategory)
+api.delete('/deleteCategory/:id', [validateJwt, roleAdmin], deleteCategory)
+
+//*Global routes
+api.get('/getCategories', [validateJwt], getCategories)
+api.post('/searchCategory/:id', [validateJwt], searchCategory)
 
 export default api

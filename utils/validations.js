@@ -15,9 +15,10 @@ export const checkDates = (data, userId) => {
 }
 
 export const dataProduct = (data) => {
-    if(Object.entries(data).length === 0 ||
-        data.category ||
-        data.stock ||
-        data.average) return false
-        return true
+    if (Object.entries(data).length === 0 ||
+        data.name == '' || data.description == '' || data.price == '' ||
+        data.stock || data.stock == '' ||
+        data.average || data.average == '' ||
+        data.category == '') return false
+    return true
 }
