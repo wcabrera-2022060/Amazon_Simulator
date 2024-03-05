@@ -1,17 +1,20 @@
 'use strict'
 
 import { Router } from 'express'
-import { createUser, deleteUser, getUsers, login, searchUser, updateUser } from './user.controller.js'
-import { roleClient, validateJwt } from '../../middlewares/verifyRole.js'
+import { createUser, deleteUser, getUsers, login, searchUser, updateUser, userToAdmin } from './user.controller.js'
+import { roleAdmin, roleClient, validateJwt } from '../../middlewares/verifyRole.js'
 
 const api = Router()
 
-//*Funciones públicas, sin token
+//*Global routes
 api.post('/createUser', createUser)
 api.post('/login', login)
+api.put('/updateUser/:id', [validateJwt], updateUser)
+api.delete('/deleteUser/:id', [validateJwt], deleteUser)
 
-//*Funciones del cliente
-api.put('/updateUser', [validateJwt, roleClient], updateUser)
-api.delete('/deleteUser', [validateJwt, roleClient], deleteUser)
+//*Admin routes
+api.get('/getUsers', [validateJwt, roleAdmin], getUsers)
+api.post('/searchUser/:id', [validateJwt, roleAdmin], searchUser)
+api.put('/userToAdmin/:id', [validateJwt, roleAdmin], userToAdmin)
 
 export default api
