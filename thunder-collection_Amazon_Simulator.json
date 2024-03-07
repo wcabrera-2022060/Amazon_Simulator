@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Amazon_Simulator",
-    "dateExported": "2024-03-05T06:47:28.370Z",
+    "dateExported": "2024-03-07T17:55:21.421Z",
     "version": "1.1",
     "folders": [
         {
@@ -78,7 +78,7 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-03-05T06:09:27.820Z",
-            "modified": "2024-03-05T06:21:08.422Z",
+            "modified": "2024-03-07T16:19:37.102Z",
             "headers": [],
             "params": [],
             "body": {
@@ -171,7 +171,7 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-03-05T06:09:27.827Z",
-            "modified": "2024-03-05T06:09:27.827Z",
+            "modified": "2024-03-05T08:11:54.092Z",
             "headers": [
                 {
                     "name": "token",
@@ -185,11 +185,11 @@
                 "form": [
                     {
                         "name": "name",
-                        "value": "Jabón7"
+                        "value": "Jabón789"
                     },
                     {
                         "name": "description",
-                        "value": "Desinfectante de manos7"
+                        "value": "Desinfectante de manos789"
                     },
                     {
                         "name": "price",
@@ -205,6 +205,7 @@
                     }
                 ]
             },
+            "reqType": "post",
             "tests": []
         },
         {
@@ -216,7 +217,7 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2024-03-05T06:09:27.821Z",
-            "modified": "2024-03-05T06:32:06.232Z",
+            "modified": "2024-03-07T16:19:46.485Z",
             "headers": [],
             "params": [],
             "body": {
@@ -225,7 +226,7 @@
                 "form": [
                     {
                         "name": "username",
-                        "value": "jnoj"
+                        "value": "des1"
                     },
                     {
                         "name": "password",
@@ -233,7 +234,8 @@
                     },
                     {
                         "name": "email",
-                        "value": "jnoj@kinal.edu.gt"
+                        "value": "jnoj@kinal.edu.gt",
+                        "isDisabled": true
                     }
                 ]
             },
@@ -595,6 +597,107 @@
             ],
             "params": [],
             "reqType": "del",
+            "tests": []
+        },
+        {
+            "_id": "e82d9af9-f45e-4d90-828c-7855e5858c95",
+            "colId": "d7fce55f-6eac-4974-9ae2-0e746f360f71",
+            "containerId": "ac4c63ce-69a7-46f2-858a-5e50ae407c50",
+            "name": "createShopping",
+            "url": "createShopping",
+            "method": "POST",
+            "sortNum": 270000,
+            "created": "2024-03-05T07:28:15.163Z",
+            "modified": "2024-03-06T04:57:45.708Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "{{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "product",
+                        "value": "65e5f95c32d83cd97952412f"
+                    },
+                    {
+                        "name": "quantity",
+                        "value": "2"
+                    }
+                ]
+            },
+            "reqType": "post",
+            "tests": []
+        },
+        {
+            "_id": "3c5ae906-826b-4074-8b7f-9a68fabeed3a",
+            "colId": "d7fce55f-6eac-4974-9ae2-0e746f360f71",
+            "containerId": "ac4c63ce-69a7-46f2-858a-5e50ae407c50",
+            "name": "addProductShopping",
+            "url": "addProductShopping/65e9e54699409e98cf83773d",
+            "method": "PUT",
+            "sortNum": 290000,
+            "created": "2024-03-06T04:56:34.110Z",
+            "modified": "2024-03-07T16:13:00.211Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "{{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "product",
+                        "value": "65e6cbf2b4794dc605c3c80a"
+                    },
+                    {
+                        "name": "quantity",
+                        "value": "1"
+                    }
+                ]
+            },
+            "reqType": "put",
+            "tests": []
+        },
+        {
+            "_id": "9f2bdf0d-ef57-4d59-bfe4-424902adf17d",
+            "colId": "d7fce55f-6eac-4974-9ae2-0e746f360f71",
+            "containerId": "ac4c63ce-69a7-46f2-858a-5e50ae407c50",
+            "name": "removeProductShopping",
+            "url": "removeProductShopping/65e9e54699409e98cf83773d",
+            "method": "PUT",
+            "sortNum": 300000,
+            "created": "2024-03-07T16:03:39.618Z",
+            "modified": "2024-03-07T16:15:45.319Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "{{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "product",
+                        "value": "65e6cbf2b4794dc605c3c80a"
+                    },
+                    {
+                        "name": "quantity",
+                        "value": "1"
+                    }
+                ]
+            },
             "tests": []
         }
     ],
