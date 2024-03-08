@@ -76,7 +76,6 @@ export const updateInvoice = async (req, res) => {
 export const pdfInvoice = async (invoice) => {
     try {
         const { date, total, nit, shopping, _id } = invoice
-
         const formatDate = date.toLocaleString('en-US', {
             weekday: 'long',
             day: 'numeric',
@@ -87,46 +86,35 @@ export const pdfInvoice = async (invoice) => {
             second: 'numeric',
             hour12: true
         })
-
         let shoppingData = await Shopping.findOne({ _id: shopping })
         let userData = await User.findOne({ _id: shoppingData.user })
-
         const doc = new PDFDocument()
-
         doc.fontSize(25).font('Helvetica-Bold').text('Invoice', { align: 'center' }).moveDown(1)
         doc.fontSize(12).font('Helvetica-Bold').text('ID: ', { continued: true }).font('Helvetica').text(_id).moveDown(0.5)
         doc.fontSize(12).font('Helvetica-Bold').text('Date: ', { continued: true }).font('Helvetica').text(formatDate).moveDown(0.5)
         doc.fontSize(12).font('Helvetica-Bold').text('NIT: ', { continued: true }).font('Helvetica').text(nit).moveDown(3)
-
         const table = {
             headers: ['Product', 'Quantity', 'Price', 'Subtotal'],
             rows: []
         }
-
         for (const item of shoppingData.products) {
             let product = await Product.findOne({ _id: item.product })
             const subTotal = (item.quantity * product.price).toFixed(2)
             table.rows.push([product.name, item.quantity, `$${product.price.toFixed(2)}`, `$${subTotal}`])
         }
-
         doc.table(table, {
             prepareHeader: () => doc.font('Helvetica-Bold').fontSize(14),
             prepareRow: () => doc.font('Helvetica').fontSize(12)
         })
-
         doc.fontSize(13).font('Helvetica-Bold').text('Subtotal: ', { continued: true }).font('Helvetica').text(`$${shoppingData.subTotal.toFixed(2)}`).moveDown(0.5)
         doc.fontSize(13).font('Helvetica-Bold').text('Total: ', { continued: true }).font('Helvetica').text(`$${total.toFixed(2)}`).moveDown(3)
-
         doc.fontSize(13).font('Helvetica-Bold').text('Name: ', { continued: true }).font('Helvetica').text(userData.name).moveDown(0.5)
         doc.fontSize(13).font('Helvetica-Bold').text('Surname: ', { continued: true }).font('Helvetica').text(userData.surname).moveDown(0.5)
         doc.fontSize(13).font('Helvetica-Bold').text('Username: ', { continued: true }).font('Helvetica').text(userData.username).moveDown(0.5)
         doc.fontSize(13).font('Helvetica-Bold').text('Email: ', { continued: true }).font('Helvetica').text(userData.email).moveDown(3)
         doc.fontSize(14).text('Thanks for your purchase')
-
         const fileName = formatDate.replace(/[ ,:]/g, '-')
-
         doc.pipe(fs.createWriteStream(`${fileName}.pdf`))
-
         doc.end()
     } catch (error) {
         console.error(error)

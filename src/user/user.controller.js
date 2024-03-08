@@ -49,6 +49,8 @@ export const defaultAdmin = async (req, res) => {
 export const login = async (req, res) => {
     try {
         let { username, password, email } = req.body
+        if (password === '' || password === undefined) return res.status(400).send({ message: 'Password required' })
+        if ((username === '' || username === undefined) && (email === '' || email === undefined)) return res.status(400).send({ message: 'Username o email required' })
         let user = await User.findOne({ $or: [{ username: username }, { email: email }] })
         if (user && await checkPassword(password, user.password)) {
             let userInfo = {
@@ -172,5 +174,25 @@ export const deleteUsers = async (req, res) => {
     } catch (error) {
         console.error(error)
         return res.status(500).send({ message: 'Error deleting user' })
+    }
+}
+
+export const updatePassword = async (req, res) => {
+    try {
+        let { _id } = req.user
+        let { id } = req.params
+        let { oldPassword, newPassword } = req.body
+        let user = await User.findOne({ _id: id })
+        if (!user) return res.status(404).send({ message: 'User not found' })
+        if (user._id.toString() !== _id.toString()) return res.status(401).send({ message: 'You do not have permission to update this users password' })
+        if (await checkPassword(oldPassword, user.password)) {
+            let updated = await User.findOneAndUpdate({ _id: _id }, { password: await encrypt(newPassword) }, { new: true })
+            if (!updated) return res.status(500).send({ message: 'User not found, not updated password' })
+            return res.send({ message: 'Updated password successfully' })
+        }
+        return res.status(404).send({ message: 'Need to enter your old password to update' })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({ message: 'Error updating password' })
     }
 }

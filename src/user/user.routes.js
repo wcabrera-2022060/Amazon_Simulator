@@ -1,7 +1,7 @@
 'use strict'
 
 import { Router } from 'express'
-import { createUser, deleteUser, deleteUsers, getUsers, login, searchUser, updateUser, updateUsers, userToAdmin } from './user.controller.js'
+import { createUser, deleteUser, deleteUsers, getUsers, login, searchUser, updatePassword, updateUser, updateUsers, userToAdmin } from './user.controller.js'
 import { roleAdmin, roleClient, validateJwt } from '../../middlewares/verifyRole.js'
 
 const api = Router()
@@ -11,6 +11,7 @@ api.post('/createUser', createUser)
 api.post('/login', login)
 api.put('/updateUser/:id', [validateJwt], updateUser)
 api.delete('/deleteUser/:id', [validateJwt], deleteUser)
+api.put('/updatePassword/:id', [validateJwt], updatePassword)
 
 //*Admin routes
 api.get('/getUsers', [validateJwt, roleAdmin], getUsers)

@@ -123,3 +123,16 @@ export const productsByCategory = async (req, res) => {
         return res.status(500).send({ message: 'Error getting products by category' })
     }
 }
+
+export const productByName = async (req, res) => {
+    try {
+        let { product } = req.body
+        const regex = new RegExp(product, 'i')
+        let getProduct = await Product.find({ name: regex }).populate('category')
+        if (getProduct.length === 0) return res.status(404).send({ message: 'Error getting products' })
+        return res.send({ message: 'Products found', getProduct })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).send({ message: 'Error getting products by name category' })
+    }
+}

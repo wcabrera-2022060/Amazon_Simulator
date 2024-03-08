@@ -2,7 +2,7 @@
 
 import { Router } from 'express'
 import {
-    createProduct, deleteProduct, getProducts, productsByCategory, productsMostSold,
+    createProduct, deleteProduct, getProducts, productByName, productsByCategory, productsMostSold,
     productsOutOfStock, searchProduct, updateProduct
 } from './product.controller.js'
 import { roleAdmin, validateJwt } from '../../middlewares/verifyRole.js'
@@ -20,5 +20,6 @@ api.get('/getProducts', [validateJwt], getProducts)
 api.post('/searchProduct', [validateJwt], searchProduct)
 api.get('/productsMostSold', [validateJwt], productsMostSold)
 api.post('/productsByCategory/:id', [validateJwt], productsByCategory)
+api.post('/productByName', [validateJwt], productByName)
 
 export default api
