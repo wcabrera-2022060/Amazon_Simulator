@@ -9,6 +9,7 @@ import userRoutes from '../src/user/user.routes.js'
 import categoryRoutes from '../src/category/category.routes.js'
 import productRoutes from '../src/product/product.routes.js'
 import shoppingRoutes from '../src/shopping/shopping.routes.js'
+import invoiceRoutes from '../src/invoice/invoice.routes.js'
 
 const app = express()
 config()
@@ -24,6 +25,7 @@ app.use(userRoutes)
 app.use(categoryRoutes)
 app.use(productRoutes)
 app.use(shoppingRoutes)
+app.use(invoiceRoutes)
 
 export const initServer = () => {
     app.listen(port)

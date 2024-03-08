@@ -119,7 +119,10 @@ export const deleteUser = async (req, res) => {
     try {
         let { _id } = req.user
         let { id } = req.params
+        let data = req.body
         if (_id.toString() !== id.toString()) return res.status(401).send({ message: 'You cannot delete this user' })
+        let {password} = await User.findOne({_id: id})
+        if(!await checkPassword(data.password, password)) return res.status(401).send({message: 'You need to add your password correctly'})
         let user = await User.findOneAndDelete({ _id: id })
         if (!user) return res.status(404).send({ message: 'User not found, not deleted' })
         return res.send({ message: 'Deleted user succesfully', user })
