@@ -121,8 +121,8 @@ export const deleteUser = async (req, res) => {
         let { id } = req.params
         let data = req.body
         if (_id.toString() !== id.toString()) return res.status(401).send({ message: 'You cannot delete this user' })
-        let {password} = await User.findOne({_id: id})
-        if(!await checkPassword(data.password, password)) return res.status(401).send({message: 'You need to add your password correctly'})
+        let { password } = await User.findOne({ _id: id })
+        if (!await checkPassword(data.password, password)) return res.status(401).send({ message: 'You need to add your password correctly' })
         let user = await User.findOneAndDelete({ _id: id })
         if (!user) return res.status(404).send({ message: 'User not found, not deleted' })
         return res.send({ message: 'Deleted user succesfully', user })
@@ -141,5 +141,36 @@ export const userToAdmin = async (req, res) => {
     } catch (error) {
         console.error(error)
         return res.status(500).send
+    }
+}
+
+export const updateUsers = async (req, res) => {
+    try {
+        let { id } = req.params
+        let data = req.body
+        let userData = checkDates(data, id)
+        if (!userData) return res.status(400).send({ message: 'Have submitted some data that cannot be updated or missing data' })
+        let user = await User.findOne({ _id: id })
+        if (user.role === 'ADMIN') return res.status(401).send({ message: 'Cannot update to another admin' })
+        let update = await User.findOneAndUpdate({ _id: id }, data, { new: true })
+        if (!update) return res.status(404).send({ message: 'User not found not updated' })
+        return res.send({ message: 'User updated successfully', update })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).send({ message: 'Error updating user' })
+    }
+}
+
+export const deleteUsers = async (req, res) => {
+    try {
+        let { id } = req.params
+        let user = await User.findOne({ _id: id })
+        if (user.role === 'ADMIN') return res.status(401).send({ message: 'Cannot delete to another admin' })
+        let deleteUser = await User.findOneAndDelete({ _id: id })
+        if (!deleteUser) return res.status(404).send({ message: 'User not found not deleted' })
+        return res.send({ message: 'User deleted successfully', deleteUser })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).send({ message: 'Error deleting user' })
     }
 }
